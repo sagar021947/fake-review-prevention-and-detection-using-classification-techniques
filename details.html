@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>E-Shop</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<style>
+		/* Remove the navbar's default margin-bottom and rounded borders */
+		.navbar {
+			margin-bottom: 0;
+			border-radius: 0;
+		}
+
+		div.stars {
+			width: 250px;
+			display: inline-block;
+		}
+
+		input.star {
+			display: none;
+		}
+
+		.glyphicon-star {
+			font-size: 20px;
+			color: #FD4;
+		}
+
+		.glyphicon-star.half {
+			position: relative;
+		}
+
+		.glyphicon-star.half:before {
+			position: relative;
+			z-index: 9;
+			width: 47%;
+			display: block;
+			overflow: hidden;
+		}
+
+		.glyphicon-star.half:after {
+			content: '\e006';
+			position: absolute;
+			z-index: 8;
+			color: #bdc3c7;
+			top: 0;
+			left: 0;
+		}
+
+		.glyphicon-star.empty {
+			position: relative;
+		}
+
+		.glyphicon-star.empty:after {
+			content: '\e006';
+			position: absolute;
+			z-index: 8;
+			color: #bdc3c7;
+			top: 0;
+			left: 0;
+		}
+
+		label.star {
+			float: right;
+			padding: 2px;
+			font-size: 30px;
+			color: #444;
+			transition: all .2s;
+		}
+
+		input.star:checked~label.star:before {
+			content: '\f005';
+			color: #FD4;
+			transition: all .25s;
+		}
+
+		input.star-5:checked~label.star:before {
+			color: #FE7;
+			text-shadow: 0 0 20px #952;
+		}
+
+		input.star-1:checked~label.star:before {
+			color: #F62;
+		}
+
+		label.star:hover {
+			transform: rotate(-15deg) scale(1.3);
+		}
+
+		label.star:before {
+			content: '\f006';
+			font-family: FontAwesome;
+		}
+		/* mixin for multiline */
+		.block-with-text {
+			display: block;
+			/* Fallback for non-webkit */
+			display: -webkit-box;
+			height: 58.8px;
+			/* Fallback for non-webkit */
+			margin: 0 auto;
+			font-size: 14px;
+			line-height: 1.4;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.norm-text {
+			display: block;
+			font-size: 14px;
+			line-height: 1.4;
+		}
+
+		canvas{
+			/*prevent interaction with the canvas*/
+			pointer-events:none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id='includedContent'></div>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
+	<script src="../static/script.js"></script>
+	<script> 
+	$("#includedContent").load("/navbar");
+	</script>
+	<br>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-4" style="float:center;">
+				<img src="{{p[3]}}" alt="Image" style="width:400px;display: block;margin-left: auto;margin-right: auto;"></img>
+			</div>
+			<div class="col-sm-6" style="float:center;">
+				<div class="col-sm-12">
+					<h3>{{p[1]}}</h3>
+					<span class="label label-primary">{{p[7]}}</span>
+					<span class="monospaced">No.{{p[0]}}</span>
+					<p class="description">Catergory: {{p[2]}}</p>
+				</div>
+				<div class="col-md-3">
+					<div title="{{p[4]}} out of 5 stars">
+						{% for j in range(0,(p[4]|int)) %}
+						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+						{% endfor %}
+						{% if (p[4]-(p[4]|int))<0.25 and (p[4]-(p[4]|int))>0 %}
+						<span class="glyphicon glyphicon-star empty" aria-hidden="true"></span>
+						{% endif %}
+						{% if (p[4]-(p[4]|int))>=0.25 and (p[4]-(p[4]|int))<0.75 %}
+						<span class="glyphicon glyphicon-star half" aria-hidden="true"></span>
+						{% endif %}
+						{% if (p[4]-(p[4]|int))>=0.75 %}
+						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+						{% endif %}
+						{% for j in range((p[4]|int)+1,5) %}
+						<span class="glyphicon glyphicon-star empty" aria-hidden="true"></span>
+						{% endfor %}
+						<span class="label label-success">{{p[6]}}</span>
+					</div>
+				</div>
+				<div class="col-md-12 bottom-rule">
+					<h2 class="product-price">${{p[8]}}</h2>
+				</div>
+				<div class="col-md-4">
+					<button class="btn btn-lg btn-brand btn-full-width" style="background:#347AB6;color:white" data-toggle="modal" data-target="#myModal">Buy Now</button>
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" role="dialog">
+						<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Confirm Purchase</h4>
+							</div>
+							<div class="modal-body">
+							<p>Do you want to purchase {{p[1][:25]}}...</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" onclick="purchaseProduct('{{p[0]}}')">OK</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div><br>
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab"
+					data-toggle="tab">Description</a></li>
+			<li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab" id='oprvws'>Reviews</a></li>
+		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="description">
+				<p class="top-10">
+					Description
+				</p>
+				<p><small>{{p[5]}}</small></p>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="reviews">
+				<div class="col-md-5">
+					{% if dr==1 %}
+					<div>
+						<h3>Write a product review</h3>
+						<div class="stars" onmousemove="mousemove(event)">
+							<h5>Ratings:</h5>
+							<input class="star star-5" id="star-5" type="radio" value="5" name="star" />
+							<label class="star star-5" for="star-5"></label>
+							<input class="star star-4" id="star-4" type="radio" value="4" name="star" />
+							<label class="star star-4" for="star-4"></label>
+							<input class="star star-3" id="star-3" type="radio" value="3" name="star" />
+							<label class="star star-3" for="star-3"></label>
+							<input class="star star-2" id="star-2" type="radio" value="2" name="star" />
+							<label class="star star-2" for="star-2"></label>
+							<input class="star star-1" id="star-1" type="radio" value="1" name="star" />
+							<label class="star star-1" for="star-1"></label>
+						</div>
+						<textarea type="text" class="form-control" id='rvwTxt' placeholder="Tell us what you like or dislike about this product" style="width:80%;height: 120px;"></textarea><br>
+						<input type="text" class="form-control" id='summ' placeholder="Headline for your review" style="width:80%"/><br>
+						<div id="captcha"></div><button class="btn btn-brand" name="rwsubmit" id="rwsubmit" onclick="writeReview('{{p[0]}}')" style="background:#347AB6;color:white">Submit</button>
+					</div>
+					{% elif dr==0 %}
+						<button class="btn btn-brand" name="rwsubmit" onclick="sendMail('{{p[0]}}')" style="background:#347AB6;color:white">Write Review</button>
+					{% endif %}
+					<div>
+						{% for r in rvws %}
+							<div>
+								<h5 style="font-weight:bold;">{{r[2]}} | {{r[5]}}</h5>
+								{% if r[6]==0 %}
+									<p style="color:gray">Verified by E-Shop <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="_3Zp_NJ"><g><circle cx="6" cy="6" r="6" fill="green"></circle><path stroke="#FFF" stroke-width="1.5" d="M3 6l2 2 4-4" fill="#878787"></path></g></svg></p>
+								{% endif %}
+								{% for i in range(1,6) %}
+									{% if i<=r[1] %}
+									<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+									{% else %}
+									<span class="glyphicon glyphicon-star empty" aria-hidden="true"></span>
+									{% endif %}
+								{% endfor %}
+								<b>{{r[3]}}</b>
+								<p class="block-with-text" onclick="a=document.getElementById('{{r[0]}}'); if(a.className=='norm-text'){a.className='block-with-text';}else{a.className='norm-text';}" id="{{r[0]}}">{{r[4]}}</p>
+							</div><br>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<div id='ftr'></div>
+	<script>
+	  $("#ftr").load("/footer");
+	</script>
+</body>
+</html>

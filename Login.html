@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>E-Shop Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .login-container {
+            width: 350px;
+            display: block;
+            margin-left: auto;
+            margin-bottom: auto;
+            margin-right: auto;
+            margin-top: 3%;
+        }
+
+        .login-form {
+            padding: 5%;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .img2 {
+            width: 25%;
+            height: 17%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .img1 {
+            width: 20%;
+            margin-left: 5%;
+        }
+
+        .login-form h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .login-container form {
+            padding: 10%;
+        }
+
+        .form-control {
+            outline: none;
+            border: none;
+            border-bottom: 2px solid #347AB6;
+        }
+
+        .btnSubmit {
+            width: 100%;
+            height: 40px;
+            border-radius: 1rem;
+            padding: 1.5%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .login-form .btnSubmit {
+            font-weight: 600;
+            color: #fff;
+            background-color: #0062cc;
+        }
+
+        .login-form .ForgetPwd {
+            color: #0062cc;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<!------ Include the above in your HEAD tag ---------->
+<img class="img1" src="../static/logo.png" alt="logo"></img>
+<div class="container login-container">
+    <div class="row">
+        <div class="col-md-12 login-form">
+            <img class="img2" src="../static/user.png" alt="user"></img>
+            <h3>User Login</h3>
+            <form action="login" method='POST'>
+                <div class="form-group">
+                    <h5>Username:</h5>
+                    <input type="text" class="form-control" name="uname" placeholder="Your Username" />
+                </div>
+                <div class="form-group">
+                    <h5>Password:</h5>
+                    <input type="password" class="form-control" name="pw" placeholder="Your Password" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btnSubmit" style="background:#347AB6;" name="submit" value="Login" />
+                </div>
+                <div class="form-group">
+                    <a href="#" class="ForgetPwd">Forget Password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

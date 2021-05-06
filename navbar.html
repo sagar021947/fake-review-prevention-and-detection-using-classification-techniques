@@ -1,0 +1,40 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#"><img src="../static/logo.png" width="180" height="50"></img></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        {% for i in category %}
+                        <li><a href="srch_det?search={{i | replace('&','%26')}}category">{{i}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{url_for('logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" action="{{url_for('search')}}" method='GET'>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" name="search">
+                </div>
+                <button type="submit" class="btn btn-default" style="background:#347AB6;"><span
+                        class="glyphicon glyphicon-search" style="color:white;"></span></button>
+            </form>
+        </div>
+</nav>
+<br /><br style="line-height:31px;" />
+
+

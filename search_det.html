@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>E-Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <style>
+  
+  .glyphicon-star {
+			font-size: 20px;
+			color: #FD4;
+		}
+
+		.glyphicon-star.half {
+			position: relative;
+		}
+
+		.glyphicon-star.half:before {
+			position: relative;
+			z-index: 9;
+			width: 47%;
+			display: block;
+			overflow: hidden;
+		}
+
+		.glyphicon-star.half:after {
+			content: '\e006';
+			position: absolute;
+			z-index: 8;
+			color: #bdc3c7;
+			top: 0;
+			left: 0;
+		}
+
+		.glyphicon-star.empty {
+			position: relative;
+		}
+
+		.glyphicon-star.empty:after {
+			content: '\e006';
+			position: absolute;
+			z-index: 8;
+			color: #bdc3c7;
+			top: 0;
+			left: 0;
+		}
+  
+  </style>
+
+
+  <div id='includedContent'></div>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
+  <script> 
+    $("#includedContent").load("/navbar");
+  </script>
+
+{% for p in prods %}
+<a href="{{url_for('product')}}?asin={{p[0]}}">
+  <div class="row">
+    <div class="col-sm-12">
+    <div class="col-sm-3"><img class="img-responsive" src="{{p[3]}}" alt="prodimg" style="height:250px"></div>
+    <div class="col-sm-6">
+        <div class="col-md-12">
+          <h4>{{p[1]}}</h4>
+          <!--span class="label label-primary">Vintage</span-->
+          <span class="label label-primary">{{p[7]}}</span>
+          <span class="monospaced">No.{{p[0]}}</span></div>
+        <div title="{{p[4]}} out of 5 stars">
+            {% for j in range(0,(p[4]|int)) %}
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            {% endfor %}
+            {% if (p[4]-(p[4]|int))<0.25 and (p[4]-(p[4]|int))>0 %}
+              <span class="glyphicon glyphicon-star empty" aria-hidden="true"></span>
+            {% endif %}
+            {% if (p[4]-(p[4]|int))>=0.25 and (p[4]-(p[4]|int))<0.75 %}
+              <span class="glyphicon glyphicon-star half" aria-hidden="true"></span>
+            {% endif %}
+            {% if (p[4]-(p[4]|int))>=0.75 %}
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            {% endif %}
+            {% for j in range((p[4]|int)+1,5) %}
+              <span class="glyphicon glyphicon-star empty" aria-hidden="true"></span>
+            {% endfor %}
+          <span class="label label-success">{{p[6]}}</span>
+       </div>
+          <div class="col-md-12 bottom-rule">
+          <h2 class="product-price">${{p[8]}}</h2>
+       </div>
+      </div>
+    </div>
+  </div>
+</a>
+<hr style="margin:20px 0px 20px 0p; padding:0px; border:0;border-bottom:1px solid #3f10e783;"/>
+{% endfor %}
+
+<div id='ftr'></div>
+<script> 
+  $("#ftr").load("/footer");
+</script>
+
+</body>
+</html>
